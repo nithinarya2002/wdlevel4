@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 const todoList = require("../todo");
-const { all, markAsComplete, add, overdue, dueLater, dueToday } = todoList();
+const { all, markComplete, add, overdue, dueLater, dueToday } = todoList();
 const formattedDate = (d) => {
   return d.toISOString().split("T")[0];
 };
@@ -45,19 +45,34 @@ describe("TodoList Test Suite", () => {
   });
   test("Should mark a todo as complete", () => {
     expect(all[0].completed).toBe(false);
-    markAsComplete(0);
+    markComplete(0);
     expect(all[0].completed).toBe(true);
   });
   test("Should check retrieval of overdue items", () => {
-    a = overdue();
-    expect(all[2].dueDate).toBe(a[0]["dueDate"]);
+    let listosTodos = overdue();
+    expect(
+      listosTodos.every((todo) => {
+        let datecheck = todo.dueDate < today;
+        return datecheck;
+      })
+    ).toBe(true);
   });
   test("Should check retrieval of duetoday items", () => {
-    a = dueToday();
-    expect(all[0].dueDate).toBe(a[0]["dueDate"]);
+    let listosTodos = dueToday();
+    expect(
+      listosTodos.every((todo) => {
+        let datecheck = todo.dueDate === today;
+        return datecheck;
+      })
+    ).toBe(true);
   });
   test("Should check retrieval of due later items", () => {
-    a = dueLater();
-    expect(all[1].dueDate).toBe(a[0]["dueDate"]);
+    let listosTodos = dueLater();
+    expect(
+      listosTodos.every((todo) => {
+        let datecheck = todo.dueDate > today;
+        return datecheck;
+      })
+    ).toBe(true);
   });
 });
