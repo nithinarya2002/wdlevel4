@@ -5,7 +5,7 @@ const formattedDate = (d) => {
   return d.toISOString().split("T")[0];
 };
 let dateToday = new Date();
-const today = formattedDate(dateToday);
+const thisday = formattedDate(dateToday);
 const yesterday = formattedDate(
   new Date(new Date().setDate(dateToday.getDate() - 1))
 );
@@ -17,7 +17,7 @@ describe("TodoList Test Suite", () => {
     add({
       title: "Test todo",
       completed: false,
-      dueDate: today,
+      dueDate: thisday,
     });
   });
   test("Should add new todo", () => {
@@ -52,7 +52,7 @@ describe("TodoList Test Suite", () => {
     let listosTodos = overdue();
     expect(
       listosTodos.every((todo) => {
-        let datecheck = todo.dueDate < today;
+        let datecheck = todo.dueDate < thisday;
         return datecheck;
       })
     ).toBe(true);
@@ -61,7 +61,7 @@ describe("TodoList Test Suite", () => {
     let listosTodos = dueToday();
     expect(
       listosTodos.every((todo) => {
-        let datecheck = todo.dueDate === today;
+        let datecheck = todo.dueDate === thisday;
         return datecheck;
       })
     ).toBe(true);
@@ -70,7 +70,7 @@ describe("TodoList Test Suite", () => {
     let listosTodos = dueLater();
     expect(
       listosTodos.every((todo) => {
-        let datecheck = todo.dueDate > today;
+        let datecheck = todo.dueDate > thisday;
         return datecheck;
       })
     ).toBe(true);
