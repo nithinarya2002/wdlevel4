@@ -6,7 +6,7 @@ const formattedDate = (d) => {
 };
 let dateToday = new Date();
 const thisday = formattedDate(dateToday);
-const yesterday = formattedDate(
+const previousday = formattedDate(
   new Date(new Date().setDate(dateToday.getDate() - 1))
 );
 const tomorrow = formattedDate(
@@ -31,14 +31,14 @@ describe("TodoList Test Suite", () => {
       {
         title: "Test todo",
         completed: false,
-        dueDate: yesterday,
+        dueDate: previousday,
       }
     );
     const todoItemCount = all.length;
     add({
       title: "Test todo",
       completed: false,
-      dueDate: yesterday,
+      dueDate: previousday,
     });
 
     expect(all.length).toBe(todoItemCount + 1);
